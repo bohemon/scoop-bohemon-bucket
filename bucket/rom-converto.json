@@ -1,0 +1,28 @@
+{
+    "version": "0.17.0",
+    "description": "Convert, compress, verify, encrypt, and decrypt ROMs and disc images",
+    "homepage": "https://github.com/DevYukine/rom-converto",
+    "license": "MIT",
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/DevYukine/rom-converto/releases/download/v0.17.0/rom-converto-cli-windows-x64.exe",
+            "hash": "01d4b4a596ad8ff0e5e9ad3c1b53229cd533497bce380879bf787fc8c00a202f"
+        }
+    },
+    "bin": [
+        [
+            "rom-converto-cli-windows-x64.exe",
+            "rom-converto"
+        ]
+    ],
+    "checkver": {
+        "github": "https://github.com/DevYukine/rom-converto"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/DevYukine/rom-converto/releases/download/v$version/rom-converto-cli-windows-x64.exe"
+            }
+        }
+    }
+}
