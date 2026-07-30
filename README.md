@@ -1,42 +1,57 @@
-# Scoop Bucket Template
+# scoop-bohemon-bucket
 
-<!-- Uncomment the following line after replacing placeholders -->
-<!-- [![Tests](https://github.com/<username>/<bucketname>/actions/workflows/ci.yml/badge.svg)](https://github.com/<username>/<bucketname>/actions/workflows/ci.yml) [![Excavator](https://github.com/<username>/<bucketname>/actions/workflows/excavator.yml/badge.svg)](https://github.com/<username>/<bucketname>/actions/workflows/excavator.yml) -->
+[![CI](https://github.com/bohemon/scoop-bohemon-bucket/actions/workflows/ci.yml/badge.svg)](https://github.com/bohemon/scoop-bohemon-bucket/actions/workflows/ci.yml)
+[![Excavator](https://github.com/bohemon/scoop-bohemon-bucket/actions/workflows/excavator.yml/badge.svg)](https://github.com/bohemon/scoop-bohemon-bucket/actions/workflows/excavator.yml)
 
-Template bucket for [Scoop](https://scoop.sh), the Windows command-line installer.
+A personal bucket for [Scoop](https://scoop.sh/), the Windows command-line installer.
+It currently provides both the CLI and GUI versions of [rom-converto](https://github.com/DevYukine/rom-converto).
 
-## How do I use this template?
+## Available manifests
 
-1. Generate your own copy of this repository with the "Use this template"
-   button.
-2. Allow all GitHub Actions:
-   - Navigate to `Settings` - `Actions` - `General` - `Actions permissions`.
-   - Select `Allow all actions and reusable workflows`.
-   - Then `Save`.
-3. Allow writing to the repository from within GitHub Actions:
-   - Navigate to `Settings` - `Actions` - `General` - `Workflow permissions`.
-   - Select `Read and write permissions`.
-   - Then `Save`.
-4. Document the bucket in `README.md`.
-5. Replace the placeholder repository string in `bin/auto-pr.ps1`.
-6. Create new manifests by copying `bucket/app-name.json.template` to
-   `bucket/<app-name>.json`.
-7. Commit and push changes.
-8. If you'd like your bucket to be indexed on `https://scoop.sh`, add the
-   topic `scoop-bucket` to your repository.
+| Manifest | Description | How to launch |
+| --- | --- | --- |
+| `rom-converto` | CLI for converting, compressing, verifying, encrypting, and decrypting ROMs and disc images | Run `rom-converto` |
+| `rom-converto-gui` | Desktop GUI for rom-converto | Open **rom-converto** from the Start menu |
 
-## How do I install these manifests?
+Both manifests target Windows x64. The CLI and GUI versions can be installed side by side.
 
-After manifests have been committed and pushed, run the following:
+## Usage
 
-```pwsh
-scoop bucket add <bucketname> https://github.com/bohemon/scoop-bohemon-bucket
-scoop install <bucketname>/<manifestname>
+Add this bucket from PowerShell after installing Scoop:
+
+```powershell
+scoop bucket add bohemon https://github.com/bohemon/scoop-bohemon-bucket
 ```
 
-## How do I contribute new manifests?
+Install the CLI:
 
-To make a new manifest contribution, please read the [Contributing
-Guide](https://github.com/ScoopInstaller/.github/blob/main/.github/CONTRIBUTING.md)
-and [App Manifests](https://github.com/ScoopInstaller/Scoop/wiki/App-Manifests)
-wiki page.
+```powershell
+scoop install bohemon/rom-converto
+rom-converto --help
+```
+
+Install the GUI:
+
+```powershell
+scoop install bohemon/rom-converto-gui
+```
+
+## Updating
+
+Update Scoop and its buckets, then update the installed applications:
+
+```powershell
+scoop update
+scoop update rom-converto rom-converto-gui
+```
+
+GitHub Actions periodically runs Excavator to check the manifests for new releases.
+
+## Contributing
+
+Bug reports and manifest improvements are welcome through [issues](https://github.com/bohemon/scoop-bohemon-bucket/issues) and pull requests.
+When modifying a manifest, please also refer to Scoop's [App Manifests documentation](https://github.com/ScoopInstaller/Scoop/wiki/App-Manifests).
+
+## License
+
+This bucket is available under the [MIT License](LICENSE). Each application remains subject to the license specified by its publisher.
