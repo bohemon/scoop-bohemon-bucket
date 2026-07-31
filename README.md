@@ -4,16 +4,16 @@
 [![Excavator](https://github.com/bohemon/scoop-bohemon-bucket/actions/workflows/excavator.yml/badge.svg)](https://github.com/bohemon/scoop-bohemon-bucket/actions/workflows/excavator.yml)
 
 A personal bucket for [Scoop](https://scoop.sh/), the Windows command-line installer.
-It currently provides both the CLI and GUI versions of [rom-converto](https://github.com/DevYukine/rom-converto).
 
 ## Available manifests
 
 | Manifest | Description | How to launch |
 | --- | --- | --- |
+| `effetune` | Real-time audio effect processor for enhancing music listening | Open **EffeTune** from the Start menu |
 | `rom-converto` | CLI for converting, compressing, verifying, encrypting, and decrypting ROMs and disc images | Run `rom-converto` |
 | `rom-converto-gui` | Desktop GUI for rom-converto | Open **rom-converto** from the Start menu |
 
-Both manifests target Windows x64. The CLI and GUI versions can be installed side by side.
+All manifests target Windows x64. The rom-converto CLI and GUI versions can be installed side by side.
 
 ## Usage
 
@@ -23,14 +23,20 @@ Add this bucket from PowerShell after installing Scoop:
 scoop bucket add bohemon https://github.com/bohemon/scoop-bohemon-bucket
 ```
 
-Install the CLI:
+Install EffeTune:
+
+```powershell
+scoop install bohemon/effetune
+```
+
+Install the rom-converto CLI:
 
 ```powershell
 scoop install bohemon/rom-converto
 rom-converto --help
 ```
 
-Install the GUI:
+Install the rom-converto GUI:
 
 ```powershell
 scoop install bohemon/rom-converto-gui
@@ -42,7 +48,7 @@ Update Scoop and its buckets, then update the installed applications:
 
 ```powershell
 scoop update
-scoop update rom-converto rom-converto-gui
+scoop update effetune rom-converto rom-converto-gui
 ```
 
 GitHub Actions periodically runs Excavator to check the manifests for new releases.
