@@ -10,7 +10,6 @@ A personal bucket for [Scoop](https://scoop.sh/), the Windows command-line insta
 | Manifest | Description | How to launch |
 | --- | --- | --- |
 | `effetune` | Real-time audio effect processor for enhancing music listening | Open **EffeTune** from the Start menu |
-| `ps3-disc-dumper` | Utility for creating decrypted PS3 disc dumps | Open **PS3 Disc Dumper** from the Start menu |
 | `rom-converto` | CLI for converting, compressing, verifying, encrypting, and decrypting ROMs and disc images | Run `rom-converto` |
 | `rom-converto-gui` | Desktop GUI for rom-converto | Open **rom-converto** from the Start menu |
 
@@ -28,12 +27,6 @@ Install EffeTune:
 
 ```powershell
 scoop install bohemon/effetune
-```
-
-Install PS3 Disc Dumper:
-
-```powershell
-scoop install bohemon/ps3-disc-dumper
 ```
 
 Install the rom-converto CLI:
@@ -55,7 +48,7 @@ Update Scoop and its buckets, then update the installed applications:
 
 ```powershell
 scoop update
-scoop update effetune ps3-disc-dumper rom-converto rom-converto-gui
+scoop update effetune rom-converto rom-converto-gui
 ```
 
 GitHub Actions periodically runs Excavator to check the manifests for new releases.
