@@ -1,12 +1,12 @@
 {
-    "version": "0.23.0",
+    "version": "0.23.1",
     "description": "Desktop GUI for converting, compressing, verifying, encrypting, and decrypting ROMs and disc images",
     "homepage": "https://github.com/DevYukine/rom-converto",
     "license": "MIT",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/DevYukine/rom-converto/releases/download/v0.23.0/rom-converto-gui-windows-x64-setup.exe#/dl.7z",
-            "hash": "87ede3e52dbe87770919e0aedfde8da6d8f386e5010d870bf860ede342e8ed6d"
+            "url": "https://github.com/DevYukine/rom-converto/releases/download/v0.23.1/rom-converto-gui-windows-x64-setup.exe#/dl.7z",
+            "hash": "1864c8c8af2caa26603ca607ac3dba2f0143cb147609d8a4b43aef2ec6d0a558"
         }
     },
     "pre_install": "Remove-Item \"$dir\\`$PLUGINSDIR\", \"$dir\\uninstall.exe\" -Recurse -Force",
