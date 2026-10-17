@@ -1,0 +1,82 @@
+{
+    "version": "6.4.0",
+    "description": "Customize buttons, gestures, and profiles for supported ELECOM mice",
+    "homepage": "https://www.elecom.co.jp/support/download/peripheral/mouse/assistant/win/",
+    "license": {
+        "identifier": "Proprietary",
+        "url": "https://www.elecom.co.jp/support/download/License_responsive.html"
+    },
+    "notes": [
+        "Requires administrator approval. Installs the official application, drivers, and startup shortcuts system-wide.",
+        "Use Scoop to update this application. Restart Windows after uninstalling to finish removing driver registrations.",
+        "License terms: https://www.elecom.co.jp/support/download/License_responsive.html"
+    ],
+    "architecture": {
+        "64bit": {
+            "url": "https://dl.elecom.co.jp/support/download/peripheral/mouse/assistant/win/ELECOM_MA_Setup_6.4.0.zip",
+            "hash": "94c8db92f1e81a4e59f9c7c5b0012cbcdd44d7a077a7afbc8dba1e144ca0a788"
+        }
+    },
+    "pre_install": [
+        "$pending = @('ElcBridgeFilter', 'ElcConFilter', 'ElcMouFilter', 'ElcVirtualBus', 'ElcVirtualHid') | Where-Object { (Get-ItemProperty -LiteralPath \"HKLM:\\SYSTEM\\CurrentControlSet\\Services\\$_\" -Name DeleteFlag -ErrorAction SilentlyContinue).DeleteFlag -eq 1 }",
+        "if ($pending) { throw 'Restart Windows to finish a previous driver removal before installing Mouse Assistant.' }"
+    ],
+    "installer": {
+        "script": [
+            "$setupPath = Join-Path $dir \"ELECOM_MA_Setup_$version.exe\"",
+            "$extractRoot = Join-Path $dir 'payload'",
+            "New-Item -ItemType Directory -Path $extractRoot -Force | Out-Null",
+            "$extractProcess = Start-Process -FilePath $setupPath -ArgumentList ('/extract \"' + $extractRoot + '\"') -Verb RunAs -WindowStyle Hidden -Wait -PassThru",
+            "if ($extractProcess.ExitCode -ne 0) { throw ('Installer extraction failed with exit code ' + $extractProcess.ExitCode) }",
+            "$msi = @(Get-ChildItem -LiteralPath $extractRoot -Recurse -File -Filter \"ELECOM_MA_Setup_$version.msi\")",
+            "if ($msi.Count -ne 1) { throw 'Expected exactly one official MSI package.' }",
+            "$windowsInstaller = New-Object -ComObject WindowsInstaller.Installer",
+            "$database = $view = $record = $null",
+            "try {",
+            "    $database = $windowsInstaller.OpenDatabase($msi[0].FullName, 0)",
+            "    $view = $database.OpenView('SELECT `Value` FROM `Property` WHERE `Property` = ''ProductCode''')",
+            "    $view.Execute()",
+            "    $record = $view.Fetch()",
+            "    if (!$record) { throw 'The MSI package has no ProductCode.' }",
+            "    $productCode = $record.StringData(1)",
+            "    $parsedCode = [guid]::Empty",
+            "    if (![guid]::TryParseExact($productCode, 'B', [ref]$parsedCode)) { throw 'Invalid MSI product code.' }",
+            "    Set-Content -LiteralPath \"$dir\\product-code.txt\" -Value $productCode -Encoding ascii",
+            "} finally {",
+            "    if ($view) { $view.Close() }",
+            "    foreach ($object in @($record, $view, $database, $windowsInstaller)) { if ($object) { [void][Runtime.InteropServices.Marshal]::FinalReleaseComObject($object) } }",
+            "}",
+            "$logPath = Join-Path $dir 'install.log'",
+            "$arguments = '/i \"' + $msi[0].FullName + '\" /qn /norestart SETUPEXEDIR=\"' + $dir + '\" AI_SETUPEXEPATH=\"' + $setupPath + '\" RUNAPPLICATION=\"\" /L*V \"' + $logPath + '\"'",
+            "$process = Start-Process -FilePath \"$env:WINDIR\\System32\\msiexec.exe\" -ArgumentList $arguments -Verb RunAs -WindowStyle Hidden -Wait -PassThru",
+            "if ($process.ExitCode -notin @(0, 3010)) { throw ('MSI installation failed with exit code ' + $process.ExitCode + '. See ' + $logPath) }",
+            "if ($process.ExitCode -eq 3010) { warn 'Restart Windows to complete the installation. No restart was initiated.' }"
+        ]
+    },
+    "uninstaller": {
+        "script": [
+            "if ($cmd -eq 'update') { return }",
+            "$productCode = (Get-Content -Raw -LiteralPath \"$dir\\product-code.txt\" -ErrorAction Stop).Trim()",
+            "$parsedCode = [guid]::Empty",
+            "if (![guid]::TryParseExact($productCode, 'B', [ref]$parsedCode)) { throw 'Invalid saved MSI product code; refusing to uninstall.' }",
+            "$windowsInstaller = New-Object -ComObject WindowsInstaller.Installer",
+            "try { $productState = $windowsInstaller.ProductState($productCode) } finally { [void][Runtime.InteropServices.Marshal]::FinalReleaseComObject($windowsInstaller) }",
+            "if ($productState -eq -1) { warn 'The recorded MSI product is not installed. No system product was removed.'; return }",
+            "$logPath = Join-Path $dir 'uninstall.log'",
+            "$arguments = '/x ' + $productCode + ' /qn /norestart /L*V \"' + $logPath + '\"'",
+            "$process = Start-Process -FilePath \"$env:WINDIR\\System32\\msiexec.exe\" -ArgumentList $arguments -Verb RunAs -WindowStyle Hidden -Wait -PassThru",
+            "if ($process.ExitCode -notin @(0, 3010)) { throw ('MSI uninstallation failed with exit code ' + $process.ExitCode + '. See ' + $logPath) }",
+            "warn 'Restart Windows to finish removing driver service registrations. No restart was initiated.'"
+        ]
+    },
+    "checkver": {
+        "regex": "ELECOM_MA_Setup_([\\d.]+)\\.zip"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://dl.elecom.co.jp/support/download/peripheral/mouse/assistant/win/ELECOM_MA_Setup_$version.zip"
+            }
+        }
+    }
+}

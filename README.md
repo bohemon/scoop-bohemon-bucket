@@ -10,6 +10,7 @@ A personal bucket for [Scoop](https://scoop.sh/), the Windows command-line insta
 | Manifest | Description | How to launch |
 | --- | --- | --- |
 | `effetune` | Real-time audio effect processor for enhancing music listening | Open **EffeTune** from the Start menu |
+| `elecom-mouse-assistant-np` | Button, gesture, and profile settings for supported ELECOM mice (non-portable) | Open **ELECOM Mouse Assistant 6** from the Start menu |
 | `rom-converto` | CLI for converting, compressing, verifying, encrypting, and decrypting ROMs and disc images | Run `rom-converto` |
 | `rom-converto-gui` | Desktop GUI for rom-converto | Open **rom-converto** from the Start menu |
 
@@ -28,6 +29,14 @@ Install EffeTune:
 ```powershell
 scoop install bohemon/effetune
 ```
+
+Install ELECOM Mouse Assistant 6:
+
+```powershell
+scoop install bohemon/elecom-mouse-assistant-np
+```
+
+The `-np` suffix denotes a non-portable package. Administrator approval is required to extract the official installer and install its MSI. The application is installed under Program Files with system-wide drivers, Start menu and desktop shortcuts, and a startup shortcut. Restart Windows after uninstalling to finish removing driver registrations. Use Scoop for application updates, and uninstall Mouse Assistant 5 or older InstallShield-based versions before installing this package.
 
 Install the rom-converto CLI:
 
@@ -48,7 +57,7 @@ Update Scoop and its buckets, then update the installed applications:
 
 ```powershell
 scoop update
-scoop update effetune rom-converto rom-converto-gui
+scoop update effetune elecom-mouse-assistant-np rom-converto rom-converto-gui
 ```
 
 GitHub Actions periodically runs Excavator to check the manifests for new releases.
