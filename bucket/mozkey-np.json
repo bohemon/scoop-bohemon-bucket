@@ -1,21 +1,21 @@
 {
-    "version": "0.10.4",
-    "description": "Japanese input method based on Mozkey and Mozc, with live conversion and Grimodex integration",
-    "homepage": "https://github.com/kazormia296/mozkey-ibg",
+    "version": "0.7.7",
+    "description": "Mozc-based Japanese input method with live conversion, local Zenz correction, and appearance customization",
+    "homepage": "https://github.com/koyasi777/mozkey",
     "license": {
         "identifier": "BSD-3-Clause",
-        "url": "https://github.com/kazormia296/mozkey-ibg/blob/main/LICENSE"
+        "url": "https://github.com/koyasi777/mozkey/blob/main/LICENSE"
     },
     "notes": [
-        "Unsigned experimental build intended for Grimodex integration. Review the upstream project's warnings before use.",
+        "Unsigned experimental build. Not an official Google Japanese Input or Google Mozc distribution. Review the upstream project's warnings before use.",
         "Requires Windows 10 1809 or later and administrator approval. Installs the official MSI system-wide, including IME registration, a service, and firewall rules.",
-        "Select Mozkey IbG from the Windows input method selector after installation. A sign-out or restart may be required.",
+        "Select Mozkey from the Windows input method selector after installation. A sign-out or restart may be required.",
         "Use Scoop for updates and removal. Restart Windows after uninstalling. No restart is initiated automatically."
     ],
     "architecture": {
         "64bit": {
-            "url": "https://github.com/kazormia296/mozkey-ibg/releases/download/v0.10.4/MozkeyIbG_v0.10.4_x64.msi#/setup.msi_",
-            "hash": "a952f12615be91fae5ad408bc09c4f7710b6eec681db792a8f96621ca01da754"
+            "url": "https://github.com/koyasi777/mozkey/releases/download/v0.7.7/Mozkey_v0.7.7_x64.msi#/setup.msi_",
+            "hash": "9cdeb11513c3540985deb896d29ae17006dfead63af9ba1051e36a5f4373cb15"
         }
     },
     "installer": {
@@ -39,18 +39,20 @@
         ]
     },
     "checkver": {
-        "url": "https://api.github.com/repos/kazormia296/mozkey-ibg/releases",
-        "jsonpath": "$..assets[?(@.name =~ /^MozkeyIbG_v[\\d.]+_x64\\.msi$/)].browser_download_url",
-        "regex": "download/v([\\d.]+)/MozkeyIbG_v[\\d.]+_x64\\.msi"
+        "url": "https://api.github.com/repos/koyasi777/mozkey/releases",
+        "jsonpath": "$..assets[?(@.name =~ /^Mozkey_v[\\d.]+_x64\\.msi$/)].browser_download_url",
+        "regex": "download/v([\\d.]+)/Mozkey_v[\\d.]+_x64\\.msi"
     },
     "autoupdate": {
         "architecture": {
             "64bit": {
-                "url": "https://github.com/kazormia296/mozkey-ibg/releases/download/v$version/MozkeyIbG_v$version_x64.msi#/setup.msi_"
+                "url": "https://github.com/koyasi777/mozkey/releases/download/v$version/Mozkey_v$version_x64.msi#/setup.msi_"
             }
         },
         "hash": {
-            "url": "https://github.com/kazormia296/mozkey-ibg/releases/download/v$version/SHA256SUMS"
+            "mode": "json",
+            "url": "https://api.github.com/repos/koyasi777/mozkey/releases/tags/v$version",
+            "jsonpath": "$.assets[?(@.name == 'Mozkey_v$version_x64.msi')].digest"
         }
     }
 }
