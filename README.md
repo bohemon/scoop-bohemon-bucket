@@ -11,6 +11,7 @@ A personal bucket for [Scoop](https://scoop.sh/), the Windows command-line insta
 | --- | --- | --- |
 | `effetune` | Real-time audio effect processor for enhancing music listening | Open **EffeTune** from the Start menu |
 | `elecom-mouse-assistant-np` | Button, gesture, and profile settings for supported ELECOM mice (non-portable) | Open **ELECOM Mouse Assistant 6** from the Start menu |
+| `mozkey-ibg-np` | Mozkey/Mozc-based Japanese input method with Grimodex integration (non-portable) | Select **Mozkey IbG** from the Windows input method selector |
 | `rom-converto` | CLI for converting, compressing, verifying, encrypting, and decrypting ROMs and disc images | Run `rom-converto` |
 | `rom-converto-gui` | Desktop GUI for rom-converto | Open **rom-converto** from the Start menu |
 
@@ -38,6 +39,14 @@ scoop install bohemon/elecom-mouse-assistant-np
 
 The `-np` suffix denotes a non-portable package. Administrator approval is required to extract the official installer and install its MSI. The application is installed under Program Files with system-wide drivers, Start menu and desktop shortcuts, and a startup shortcut. Restart Windows after uninstalling to finish removing driver registrations. Use Scoop for application updates, and uninstall Mouse Assistant 5 or older InstallShield-based versions before installing this package.
 
+Install Mozkey IbG for Windows x64:
+
+```powershell
+scoop install bohemon/mozkey-ibg-np
+```
+
+This non-portable package requires Windows 10 1809 or later and administrator approval. It runs the official MSI to install the IME, its service, and firewall rules system-wide. Upstream distributes unsigned experimental prereleases intended for Grimodex integration; review the [project's warnings](https://github.com/kazormia296/mozkey-ibg#readme) before use. A sign-out or restart may be needed before selecting the IME. Use Scoop for updates and removal, and restart Windows after uninstalling; the manifest does not restart Windows automatically. Settings and learned data remain in the application's own user profile rather than Scoop's persist directory.
+
 Install the rom-converto CLI:
 
 ```powershell
@@ -57,7 +66,7 @@ Update Scoop and its buckets, then update the installed applications:
 
 ```powershell
 scoop update
-scoop update effetune elecom-mouse-assistant-np rom-converto rom-converto-gui
+scoop update effetune elecom-mouse-assistant-np mozkey-ibg-np rom-converto rom-converto-gui
 ```
 
 GitHub Actions periodically runs Excavator to check the manifests for new releases.

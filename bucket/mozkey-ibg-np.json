@@ -1,0 +1,56 @@
+{
+    "version": "0.10.4",
+    "description": "Japanese input method based on Mozkey and Mozc, with live conversion and Grimodex integration",
+    "homepage": "https://github.com/kazormia296/mozkey-ibg",
+    "license": {
+        "identifier": "BSD-3-Clause",
+        "url": "https://github.com/kazormia296/mozkey-ibg/blob/main/LICENSE"
+    },
+    "notes": [
+        "Unsigned experimental build intended for Grimodex integration. Review the upstream project's warnings before use.",
+        "Requires Windows 10 1809 or later and administrator approval. Installs the official MSI system-wide, including IME registration, a service, and firewall rules.",
+        "Select Mozkey IbG from the Windows input method selector after installation. A sign-out or restart may be required.",
+        "Use Scoop for updates and removal. Restart Windows after uninstalling. No restart is initiated automatically."
+    ],
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/kazormia296/mozkey-ibg/releases/download/v0.10.4/MozkeyIbG_v0.10.4_x64.msi#/setup.msi_",
+            "hash": "a952f12615be91fae5ad408bc09c4f7710b6eec681db792a8f96621ca01da754"
+        }
+    },
+    "installer": {
+        "script": [
+            "$logPath = Join-Path $dir 'install.log'",
+            "$arguments = '/i \"' + $dir + '\\setup.msi_\" /qn /norestart /L*V \"' + $logPath + '\"'",
+            "$process = Start-Process -FilePath \"$env:WINDIR\\System32\\msiexec.exe\" -ArgumentList $arguments -Verb RunAs -WindowStyle Hidden -Wait -PassThru",
+            "if ($process.ExitCode -notin @(0, 3010)) { throw ('MSI installation failed with exit code ' + $process.ExitCode + '. See ' + $logPath) }",
+            "if ($process.ExitCode -eq 3010) { warn 'Restart Windows to complete the installation. No restart was initiated.' }"
+        ]
+    },
+    "uninstaller": {
+        "script": [
+            "if ($cmd -eq 'update') { return }",
+            "$logPath = Join-Path $dir 'uninstall.log'",
+            "$arguments = '/x \"' + $dir + '\\setup.msi_\" /qn /norestart /L*V \"' + $logPath + '\"'",
+            "$process = Start-Process -FilePath \"$env:WINDIR\\System32\\msiexec.exe\" -ArgumentList $arguments -Verb RunAs -WindowStyle Hidden -Wait -PassThru",
+            "if ($process.ExitCode -eq 1605) { warn 'The MSI product is not installed. No system product was removed.'; return }",
+            "if ($process.ExitCode -notin @(0, 3010)) { throw ('MSI uninstallation failed with exit code ' + $process.ExitCode + '. See ' + $logPath) }",
+            "warn 'Restart Windows to complete IME removal. No restart was initiated.'"
+        ]
+    },
+    "checkver": {
+        "url": "https://api.github.com/repos/kazormia296/mozkey-ibg/releases",
+        "jsonpath": "$..assets[?(@.name =~ /^MozkeyIbG_v[\\d.]+_x64\\.msi$/)].browser_download_url",
+        "regex": "download/v([\\d.]+)/MozkeyIbG_v[\\d.]+_x64\\.msi"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/kazormia296/mozkey-ibg/releases/download/v$version/MozkeyIbG_v$version_x64.msi#/setup.msi_"
+            }
+        },
+        "hash": {
+            "url": "https://github.com/kazormia296/mozkey-ibg/releases/download/v$version/SHA256SUMS"
+        }
+    }
+}
