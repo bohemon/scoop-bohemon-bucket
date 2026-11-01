@@ -1,5 +1,5 @@
 {
-    "version": "0.7.7",
+    "version": "1.0.0",
     "description": "Mozc-based Japanese input method with live conversion, local Zenz correction, and appearance customization",
     "homepage": "https://github.com/koyasi777/mozkey",
     "license": {
@@ -14,8 +14,8 @@
     ],
     "architecture": {
         "64bit": {
-            "url": "https://github.com/koyasi777/mozkey/releases/download/v0.7.7/Mozkey_v0.7.7_x64.msi#/setup.msi_",
-            "hash": "9cdeb11513c3540985deb896d29ae17006dfead63af9ba1051e36a5f4373cb15"
+            "url": "https://github.com/koyasi777/mozkey/releases/download/v1.0.0/Mozkey_v1.0.0_x64.msi#/setup.msi_",
+            "hash": "a779f0fc09366100778c469923bd94aff2a52aa69b4d23e8d0258395c60547f6"
         }
     },
     "installer": {
