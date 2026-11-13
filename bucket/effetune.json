@@ -1,12 +1,12 @@
 {
-    "version": "2.17.0",
+    "version": "2.18.1",
     "description": "Real-time audio effect processor for enhancing music listening",
     "homepage": "https://github.com/Frieve-A/effetune",
     "license": "MIT",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/Frieve-A/effetune/releases/download/v2.17.0/EffeTune-2.17.0-Windows-Portable.zip",
-            "hash": "26d8750b6fdc3f98c5e998be4163c4d7b474f8294fb9918425770dabca8922fd"
+            "url": "https://github.com/Frieve-A/effetune/releases/download/v2.18.1/EffeTune-2.18.1-Windows-Portable.zip",
+            "hash": "081aaaefcc1dd69c99a9206da4ea4b76c2f0506be58aef52d598dabce9f19c51"
         }
     },
     "shortcuts": [
